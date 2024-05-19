@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+<div class="card-group">
+  <div class="card">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Teams Chart</h5>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+  <div class="card">
+    <img src="{% static 'common/logo2.JPG' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Cyclists Chart</h5>
+        {% for cyclist in top_three_cyclists %}
+      <p class="card-text">{{ cyclist.first_name }} {{ cyclist.last_name }}</p>
+      <p class="card-text"><small class="text-body-secondary">Total Points: {{ cyclist.points }}</small></p>
+        {% endfor %}
+    </div>
+  </div>
+  <div class="card">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Recently Added Jobs</h5>
+
+          {% for job in recently_added_jobs %}
+              <p class="card-text">
+              {{ job.title }}
+              </p>
+              <p class="card-text"><small class="text-body-secondary">Added on: {{ job.created_at }}</small></p>
+          {% endfor %}
+
+
+    </div>
+  </div>
+</div>
+{% endblock %}

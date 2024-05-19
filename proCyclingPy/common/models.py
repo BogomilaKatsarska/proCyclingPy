@@ -1,5 +1,4 @@
 from django.db import models
-
 from proCyclingPy.team_manager.models import TeamManager
 
 
@@ -83,3 +82,75 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Job(models.Model):
+    TITLE_MAX_LEN = 300
+    SPECIALTY_MAX_LEN = 50
+    ONE_DAY_RACES = 'One Day Races'
+    GC = 'General Classification'
+    TT = 'Time Trail'
+    SPRINT = 'Sprint'
+    CLIMBER = 'Climber'
+    HILLS = 'Hills'
+
+    SPECIALTIES = (
+        (ONE_DAY_RACES, ONE_DAY_RACES),
+        (GC, GC),
+        (TT, TT),
+        (SPRINT, SPRINT),
+        (CLIMBER, CLIMBER),
+        (HILLS, HILLS),
+    )
+
+    title = models.CharField(
+        max_length=TITLE_MAX_LEN,
+    )
+    team_manager = models.ForeignKey(
+        TeamManager,
+        on_delete=models.CASCADE,
+    )
+    specialty = models.CharField(
+        max_length=SPECIALTY_MAX_LEN,
+        choices=SPECIALTIES,
+        null=False,
+        blank=False
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    last_modified = models.DateTimeField(
+        auto_now=True,
+    )
+    salary = models.PositiveIntegerField(
+        null=False,
+        blank=False,
+    )
+    description = models.TextField(
+        null=False,
+        blank=False,
+    )
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.title} created by {self.team_manager}'
+
+
+# class FavouriteJob(models.Model):
+#     user = models.ForeignKey(
+#         Cyclist,
+#         on_delete=models.CASCADE,
+#     )
+#     job = models.ForeignKey(
+#         Job,
+#         on_delete=models.CASCADE,
+#     )
+#     added_to_favourites = models.DateTimeField(
+#         auto_now_add=True,
+#     )
+#
+#     class Meta:
+#         unique_together = ('user', 'job')
+#

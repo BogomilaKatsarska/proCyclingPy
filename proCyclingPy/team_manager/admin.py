@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from proCyclingPy.team_manager.models import TeamManager
+
+
+@admin.register(TeamManager)
+class TeamManagerAdmin(admin.ModelAdmin):
+    pass

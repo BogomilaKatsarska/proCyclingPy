@@ -1,3 +1,12 @@
 from django.contrib import admin
+from proCyclingPy.common.models import Team, Job
 
-# Register your models here.
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Job)
+class JobAdmin(admin.ModelAdmin):
+    pass

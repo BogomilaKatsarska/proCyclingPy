@@ -1,3 +1,6 @@
 {% extends 'base/base.html' %}
 {% block page_content %}
+    {% for job in job_list %}
+    {{ job }}
+    {% endfor %}
 {% endblock %}

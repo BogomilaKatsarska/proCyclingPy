@@ -1,6 +1,10 @@
+from datetime import date
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django_countries.fields import CountryField
+
+from proCyclingPy.common.models import Team
 
 UserModel = get_user_model()
 
@@ -53,17 +57,51 @@ class Cyclist(models.Model):
         null=False,
         blank=False,
     )
-    height = models.FloatField(
+    height_in_cm = models.PositiveIntegerField(
         null=False,
         blank=False,
     )
+    birthday = models.DateField(
+        null=True,
+        blank=True,
+    )
     about = models.TextField(
         max_length=ABOUT_MAX_LEN,
+    )
+    employed = models.BooleanField()
+    team = models.ForeignKey(
+        Team,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
     )
     strava = models.URLField(
         null=True,
         blank=True,
     )
+    points = models.PositiveIntegerField(
+        null=False,
+        blank=False,
+    )
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
+    @property
+    def age(self):
+        today = date.today()
+        age = today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
+
+        return age
+
+    @property
+    def daily_kcal_loose_weight(self):
+        return (655 + (9.6 * self.weight) + (1.8 * self.height_in_cm) - (4.7 * self.age)*1.75*1.45) - 300
+
+    @property
+    def daily_kcal_maintain_weight(self):
+        return 655 + (9.6 * self.weight) + (1.8 * self.height_in_cm) - (4.7 * self.age) * 1.75 * 1.45
+
+    @property
+    def get_all_unemployed_cyclists(self):
+        return Cyclist.objects.filter(employed=False)

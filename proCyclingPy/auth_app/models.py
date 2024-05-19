@@ -1,10 +1,11 @@
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 from proCyclingPy.auth_app.managers import AppUserManager
 
 
-class Profile(AbstractBaseUser):
+class Profile(AbstractBaseUser, PermissionsMixin):
     ROLE_MAX_LEN = 15
     CYCLIST = 'Cyclist'
     TEAM_MANAGER = 'Team Manager'
@@ -16,11 +17,13 @@ class Profile(AbstractBaseUser):
 
     username = None
     email = models.EmailField(
+        unique=True,
         null=False,
         blank=False,
     )
     role = models.CharField(
         max_length=ROLE_MAX_LEN,
+        choices=ROLES,
         null=False,
         blank=False,
     )
