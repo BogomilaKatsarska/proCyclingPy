@@ -1,5 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from proCyclingPy.team_manager.models import TeamManager
+
+UserModel = get_user_model()
 
 
 class Team(models.Model):
@@ -138,19 +141,20 @@ class Job(models.Model):
         return f'{self.title} created by {self.team_manager}'
 
 
-# class FavouriteJob(models.Model):
-#     user = models.ForeignKey(
-#         Cyclist,
-#         on_delete=models.CASCADE,
-#     )
-#     job = models.ForeignKey(
-#         Job,
-#         on_delete=models.CASCADE,
-#     )
-#     added_to_favourites = models.DateTimeField(
-#         auto_now_add=True,
-#     )
-#
-#     class Meta:
-#         unique_together = ('user', 'job')
-#
+class FavouriteJob(models.Model):
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
+    job = models.ForeignKey(
+        Job,
+        on_delete=models.CASCADE,
+    )
+    added_to_favourites = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        unique_together = ('user', 'job')
+
+

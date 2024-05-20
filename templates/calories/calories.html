@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
+    <div class="card h-100">
+      <img src="{% static 'calories/loose_weight.JPG' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Loose Weight - kcal  {{ daily_kcal_loose_weight|floatformat:0 }}</h5>
+        <p class="card-text">The calories above have been calculated having in mind your activity level, weight, height and age. Please note that these calories are not applicable for a sedentary person. If the metrics below are incorrect, please update your profile to see accurate results. </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Weight: {{ user.weight }}  Height: {{ user.height_in_cm }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="{% static 'calories/maintain_weight.JPG' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Maintain Weight - kcal {{ daily_kcal_maintain_weight|floatformat:0 }} </h5>
+        <p class="card-text">The calories above have been calculated having in mind your activity level, weight, height and age. Please note that these calories are not applicable for a sedentary person. If the metrics below are incorrect, please update your profile to see accurate results. </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Weight: {{ user.weight }}  Height: {{ user.height_in_cm }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

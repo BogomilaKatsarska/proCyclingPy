@@ -8,6 +8,7 @@ urlpatterns = [
     path('auth/', include('proCyclingPy.auth_app.urls')),
     path('cyclist/', include('proCyclingPy.cyclist.urls')),
     path('team-manager/', include('proCyclingPy.team_manager.urls')),
+    path('calories/', include('proCyclingPy.calories.urls')),
     path('', include('proCyclingPy.common.urls')),
 ]
 

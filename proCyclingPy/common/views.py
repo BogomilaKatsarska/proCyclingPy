@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, DetailView
 from proCyclingPy.common.forms import JobCreateForm, JobEditForm
-from proCyclingPy.common.models import Job, Team
+from proCyclingPy.common.models import Job, Team, FavouriteJob
 from proCyclingPy.cyclist.models import Cyclist
 
 
@@ -17,6 +17,10 @@ def index(request):
     return render(request, 'common/index.html', context)
 
 
+def about_us(request):
+    return render(request, 'common/about-us.html')
+
+
 class JobCreateView(CreateView):
     template_name = 'common/create-job.html'
     form_class = JobCreateForm
@@ -24,6 +28,11 @@ class JobCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.team_manager = self.request.user
+
+
+class JobDetailsView(DetailView):
+    model = Job
+    template_name = 'common/details-job.html'
 
 
 class JobEditView(UpdateView):
@@ -78,3 +87,19 @@ class TeamListView(ListView):
 
     def __get_pattern(self):
         return self.request.GET.get('pattern', None)
+
+
+def add_job_to_favourites(request, pk):
+    user_pk = request.user.pk
+    if not Cyclist.objects.filter(pk=user_pk).exists():
+        return redirect('index')
+
+    job = get_object_or_404(Job, pk=pk)
+
+    if not FavouriteJob.objects.filter(user=request.user, job=job).exists():
+        FavouriteJob.objects.create(
+            user=request.user,
+            job=job,
+        )
+
+    return redirect('all jobs')

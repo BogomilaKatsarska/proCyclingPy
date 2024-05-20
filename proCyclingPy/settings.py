@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'proCyclingPy.cyclist',
     'proCyclingPy.team_manager',
     'proCyclingPy.common',
+    'proCyclingPy.calories',
 ]
 
 MIDDLEWARE = [

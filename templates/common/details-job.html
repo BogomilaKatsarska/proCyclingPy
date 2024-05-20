@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+  <div class="card-header">{{ object.title }}</div>
+  <div class="card-body">
+    <h5 class="card-title">Team Manager: {{ object.team_manager }}</h5>
+    <h5 class="card-title">Specialty: {{ object.specialty }}</h5>
+    <h5 class="card-title">Salary: {{ object.salary }}</h5>
+    <p class="card-text">Description: {{ object.description }}</p>
+      <br>
+      <h5 class="card-title">Created At: {{ object.created_at }}</h5>
+    <h5 class="card-title">Last Modified: {{ object.last_modified }}</h5>
+
+      <a href="{% url 'add job to favourites' pk=job.pk %}" class="btn btn-primary">Add to Favourites</a>
+
+  </div>
+</div>
+{% endblock %}

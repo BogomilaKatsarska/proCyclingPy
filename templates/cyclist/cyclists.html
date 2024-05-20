@@ -1,0 +1,17 @@
+{% extends 'base/base.html'  %}
+{% block page_content %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for cyclist in cyclist_list %}
+
+  <div class="col">
+    <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ cyclist.first_name }} {{ cyclist.last_name }}</h5>
+        <p class="card-text">Height: {{ cyclist.height_in_cm }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

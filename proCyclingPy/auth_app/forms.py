@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 
+from proCyclingPy.cyclist.models import Cyclist
+from proCyclingPy.team_manager.models import TeamManager
+
 UserModel = get_user_model()
 
 
@@ -46,3 +49,5 @@ class LoginForm(AuthenticationForm):
 class ChangePasswordForm(PasswordChangeForm):
     class Meta:
         model = UserModel
+        template_name = 'auth'
+
