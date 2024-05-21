@@ -32,15 +32,15 @@
           <a class="nav-link active" aria-current="page" href="{% url 'all cyclists' %}">Cyclists</a>
         </li>
 {#      TODO: chek this below#}
-          {% if request.user.role == 'Cyclist' %}
+{#          {% if request.user.role == 'Cyclist' %}#}
           <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Calories</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'calories' %}">Calories</a>
         </li>
-              {% elif request.user.role == 'Team Manager' %}
+{#              {% elif request.user.role == 'Team Manager' %}#}
               <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Create Job</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'create job' %}">Create Job</a>
         </li>
-          {% endif %}
+{#          {% endif %}#}
       </ul>
 
       <form class="d-flex" role="search">
@@ -55,7 +55,7 @@
         </li>
                   <li>
           <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Profile</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'details profile' pk=request.user.pk %}">Profile</a>
         </li>
          {% else %}
                    <li class="nav-item">

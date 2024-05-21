@@ -1,20 +1,21 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView
-
 from proCyclingPy.auth_app.forms import SignUpForm, LoginForm
-from proCyclingPy.cyclist.models import Cyclist
-from proCyclingPy.team_manager.models import TeamManager
+from proCyclingPy.auth_app.signals import create_user_profile
 
+
+UserModel = get_user_model()
 
 class SignUpView(CreateView):
     template_name = 'auth_app/signUp.html'
     form_class = SignUpForm
-    # success_url = reverse_lazy(index)
+    success_url = reverse_lazy('index')
+    extra_context = {'title': 'Register'}
 
     def form_valid(self, form):
         result = super().form_valid(form)
@@ -45,14 +46,30 @@ class ChangePasswordView(PasswordChangeView):
     # success_url =
 
 
-# def details_profile(request):
-#     user_pk = request.user.pk
-#     try:
-#         logged_user = Cyclist.objects.get(pk=user_pk)
-#         except:
-#         logged_user = TeamManager.objects.get(pk=user_pk)
-#     return render(request, 'auth_app/profile-view.html', context)
-#
+class ProfileDetailView(DetailView, LoginRequiredMixin):
+    def get(self, request, *args, **kwargs):
+        user_type = self.request.user.role
+        #TODO: add links to redirects below
+        if user_type == 'Cyclist':
+            return redirect('details cyclist', pk=self.request.user.pk)
+        elif user_type == 'Team Manager':
+            return redirect('details profile', pk=self.request.user.pk)
+        else:
+            return redirect('select role')
+
+
+def select_role(request):
+    if request.method == 'POST':
+        role = request.POST.get('role')
+        if role:
+            request.user.role = role
+            request.user.save()
+            create_user_profile(sender=UserModel, instance=request.user, created=True)
+            return redirect('details profile')
+
+    return render(request, 'common/select-role.html')
+
+
 # class CyclistViewForm(forms.ModelForm):
 #     model = Cyclist
 #

@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView, ListView
+from django.views.generic import UpdateView, ListView, DetailView
 
 from proCyclingPy.cyclist.forms import CyclistEditForm
 from proCyclingPy.cyclist.models import Cyclist
 
 
-class EditCyclist(UpdateView):
+class EditCyclistView(UpdateView):
     model = Cyclist
     template_name = 'cyclist/edit-profile.html'
     form_class = CyclistEditForm
@@ -17,3 +17,15 @@ class CyclistListView(ListView):
     model = Cyclist
     template_name = 'cyclist/cyclists.html'
     paginate_by = 9
+
+
+class ViewCyclistView(DetailView):
+    model = Cyclist
+
+    template_name = 'cyclist/details-profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.request.user.pk
+        context['pk'] = pk
+        return context

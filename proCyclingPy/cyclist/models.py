@@ -38,28 +38,28 @@ class Cyclist(models.Model):
     )
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_LEN,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
     last_name = models.CharField(
         max_length=LAST_NAME_MAX_LEN,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
     specialty = models.CharField(
         max_length=SPECIALTY_MAX_LEN,
         choices=SPECIALTIES,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
     country = CountryField()
     weight = models.FloatField(
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
     height_in_cm = models.PositiveIntegerField(
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
     birthday = models.DateField(
         null=True,
@@ -67,8 +67,13 @@ class Cyclist(models.Model):
     )
     about = models.TextField(
         max_length=ABOUT_MAX_LEN,
+        null=True,
+        blank=True,
     )
-    employed = models.BooleanField()
+    employed = models.BooleanField(
+        null=True,
+        blank=True,
+    )
     team = models.ForeignKey(
         Team,
         on_delete=models.RESTRICT,
@@ -80,8 +85,8 @@ class Cyclist(models.Model):
         blank=True,
     )
     points = models.PositiveIntegerField(
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
 
     def __str__(self):

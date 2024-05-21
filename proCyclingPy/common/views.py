@@ -24,10 +24,20 @@ def about_us(request):
 class JobCreateView(CreateView):
     template_name = 'common/create-job.html'
     form_class = JobCreateForm
-    # success_url =
+    extra_context = {'title': 'Add New Job'}
+    success_url = 'all jobs'
 
     def form_valid(self, form):
         form.instance.team_manager = self.request.user
+        return super(JobCreateView, self).form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid():
+            form.save()
+        else:
+            return self.form_invalid(form)
 
 
 class JobDetailsView(DetailView):
@@ -68,6 +78,7 @@ class JobListView(ListView):
 
     def __get_pattern(self):
         return self.request.GET.get('pattern', None)
+
 
 class TeamListView(ListView):
     template_name = 'common/teams.html'

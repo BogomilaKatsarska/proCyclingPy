@@ -1,8 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from proCyclingPy.auth_app.models import Profile
 
-from proCyclingPy.cyclist.models import Cyclist
-from proCyclingPy.team_manager.models import TeamManager
 
 UserModel = get_user_model()
 
@@ -31,6 +30,23 @@ class SignUpForm(UserCreationForm):
         })
 
         self.fields['role'].label = 'Profile type'
+
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+        email = self.cleaned_data['email']
+        password1 = self.cleaned_data['password1']
+        password2 = self.cleaned_data['password2']
+        role = self.cleaned_data['role']
+        profile = Profile(
+            user=user,
+            email=email,
+            password1=password1,
+            password2=password2,
+            role=role,
+        )
+        if commit:
+            profile.save()
+        return user
 
 
 class LoginForm(AuthenticationForm):

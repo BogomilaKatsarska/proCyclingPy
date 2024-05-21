@@ -7,6 +7,6 @@ from proCyclingPy.team_manager.models import TeamManager
 
 class EditTeamManager(UpdateView):
     model = TeamManager
-    template_name = 'cyclist/edit-profile.html'
+    template_name = 'team-manager/edit-profile.html'
     form_class = TeamManagerEditForm
     # success_url = reverse_lazy()
