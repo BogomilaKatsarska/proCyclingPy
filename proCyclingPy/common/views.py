@@ -5,6 +5,7 @@ from django.views.generic import CreateView, UpdateView, ListView, DetailView
 from proCyclingPy.common.forms import JobCreateForm, JobEditForm
 from proCyclingPy.common.models import Job, Team, FavouriteJob
 from proCyclingPy.cyclist.models import Cyclist
+from proCyclingPy.team_manager.models import TeamManager
 
 
 def index(request):
@@ -25,19 +26,13 @@ class JobCreateView(CreateView):
     template_name = 'common/create-job.html'
     form_class = JobCreateForm
     extra_context = {'title': 'Add New Job'}
-    success_url = 'all jobs'
+    success_url = reverse_lazy('all jobs')
 
     def form_valid(self, form):
-        form.instance.team_manager = self.request.user
+        user_pk = self.request.user
+        team_manager = TeamManager.objects.get(pk=user_pk)
+        form.instance.team_manager = team_manager
         return super(JobCreateView, self).form_valid(form)
-
-    def post(self, request, *args, **kwargs):
-        self.object = None
-        form = self.get_form()
-        if form.is_valid():
-            form.save()
-        else:
-            return self.form_invalid(form)
 
 
 class JobDetailsView(DetailView):
@@ -65,6 +60,13 @@ class JobListView(ListView):
     extra_context = {
         'all_jobs': Job.objects.all(),
     }
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_anonymous:
+            return context
+        context['fav_jobs'] = FavouriteJob.objects.filter(user=self.request.user)
+
+        return context
 
     #TODO: check below
     def get_queryset(self):

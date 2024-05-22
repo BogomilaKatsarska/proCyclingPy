@@ -35,6 +35,7 @@ class Cyclist(models.Model):
         UserModel,
         on_delete=models.CASCADE,
         primary_key=True,
+        related_name='cyclist',
     )
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_LEN,

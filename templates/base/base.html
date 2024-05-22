@@ -31,16 +31,15 @@
           <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'all cyclists' %}">Cyclists</a>
         </li>
-{#      TODO: chek this below#}
-{#          {% if request.user.role == 'Cyclist' %}#}
+          {% if request.user.role == 'Cyclist' %}
           <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'calories' %}">Calories</a>
         </li>
-{#              {% elif request.user.role == 'Team Manager' %}#}
+              {% elif request.user.role == 'Team Manager' %}
               <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'create job' %}">Create Job</a>
         </li>
-{#          {% endif %}#}
+          {% endif %}
       </ul>
 
       <form class="d-flex" role="search">

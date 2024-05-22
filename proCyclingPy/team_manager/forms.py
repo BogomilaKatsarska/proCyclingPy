@@ -11,3 +11,9 @@ class TeamManagerEditForm(forms.ModelForm):
     class Meta:
         model = TeamManager
         fields = '__all__'
+
+
+class TeamManagerViewForm(forms.ModelForm):
+    class Meta:
+        model = TeamManager
+        fields = '__all__'

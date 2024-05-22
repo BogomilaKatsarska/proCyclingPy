@@ -11,3 +11,9 @@ class CyclistEditForm(forms.ModelForm):
     class Meta:
         model = Cyclist
         fields = '__all__'
+
+
+class CyclistViewForm(forms.ModelForm):
+    class Meta:
+        model = Cyclist
+        fields = '__all__'

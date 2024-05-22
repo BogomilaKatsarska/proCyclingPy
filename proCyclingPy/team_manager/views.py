@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DetailView
 
-from proCyclingPy.team_manager.forms import TeamManagerEditForm
+from proCyclingPy.team_manager.forms import TeamManagerEditForm, TeamManagerViewForm
 from proCyclingPy.team_manager.models import TeamManager
 
 
@@ -10,3 +10,15 @@ class EditTeamManager(UpdateView):
     template_name = 'team-manager/edit-profile.html'
     form_class = TeamManagerEditForm
     # success_url = reverse_lazy()
+
+
+class ViewTeamManagerView(DetailView):
+    model = TeamManager
+    form_class = TeamManagerViewForm
+    template_name = 'team-manager/details-profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.request.user.pk
+        context['pk'] = pk
+        return context

@@ -8,6 +8,17 @@ class JobCreateForm(forms.ModelForm):
         model = Job
         exclude = ('team_manager',)
 
+    # def save(self, commit=True):
+    #     job = super().save(commit=commit)
+    #     title = self.cleaned_data['title']
+    #     specialty = self.cleaned_data['specialty']
+    #     salary = self.cleaned_data['salary']
+    #     description = self.cleaned_data['description']
+    #     job = Job(
+    #         team_manager=
+    #     )
+    #
+
 
 class JobEditForm(forms.ModelForm):
     class Meta:
