@@ -53,7 +53,7 @@ class ProfileDetailView(DetailView, LoginRequiredMixin):
         if user_type == 'Cyclist':
             return redirect('details cyclist', pk=self.request.user.pk)
         elif user_type == 'Team Manager':
-            return redirect('details profile', pk=self.request.user.pk)
+            return redirect('details team manager', pk=self.request.user.pk)
         else:
             return redirect('select role')
 

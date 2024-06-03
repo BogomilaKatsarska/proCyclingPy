@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+    <body>
+    <div class="card" style="width: 18rem;">
+        {% if object.profile_picture %}
+            <img src="{{ object.profile_picture }}" class="card-img-top" alt="...">
+        {% else %}
+            <img src="{% static 'common/no-image.jpg' %}" class="card-img-top" alt="...">
 
-</body>
-</html>
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ object.first_name }} {{ object.last_name }}</h5>
+            {#    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Email: {{ object.user.email }}</li>
+            <li class="list-group-item">Role: {{ object.user.role }}</li>
+            <li class="list-group-item">Created at: {{ object.user.date_joined }}</li>
+            <li class="list-group-item">Updated at: {{ object.user.last_login }}</li>
+        </ul>
+        <div class="card-body">
+            <a href="{% url 'edit team manager' pk=request.user.pk %}" class="btn btn-primary btn-sm">Edit Profile</a>
+            <a href="{% url 'delete team manager' pk=request.user.pk %}" class="btn btn-primary btn-sm">Delete
+                Profile</a>
+        </div>
+    </div>
+
+    {#{% if object.profile_picture %}#}
+    {#{{ object.profile_picture }}#}
+    {#{% endif %}#}
+
+    {#{{ object.first_name }}#}
+    {#{{ object.last_name }}#}
+    {#{{ object.user.email }}#}
+    {#{{ object.user.role }}#}
+    {#{{ object.user.date_joined }}#}
+    {#{{ object.user.last_login }}#}
+    </body>
+{% endblock %}

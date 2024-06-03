@@ -60,6 +60,8 @@ class JobListView(ListView):
     extra_context = {
         'all_jobs': Job.objects.all(),
     }
+    paginate_by = 4
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_anonymous:
